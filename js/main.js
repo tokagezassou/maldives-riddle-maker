@@ -1,19 +1,9 @@
-const status = document.getElementById('status');
-const result = document.getElementById('result');
-const testBtn = document.getElementById('testBtn');
+import { showScreen, setupNavigation } from './screens.js';
 
 if (location.protocol === 'file:') {
-  status.textContent = 'file:// で開いています。ローカルサーバー経由で開き直してください';
-  status.className = 'ng';
+  document.body.innerHTML =
+    '<p style="color:red">file:// では動作しません。ローカルサーバー経由で開いてください。</p>';
 } else {
-  status.textContent = `OK: ${location.protocol}//${location.host} で動作中`;
-  status.className = 'ok';
+  setupNavigation();
+  showScreen('screen-title');
 }
-
-let count = 0;
-testBtn.addEventListener('click', () => {
-  count++;
-  result.textContent = `${count} 回クリックされましたよん`;
-});
-
-console.log('スクリプトが読み込まれました');

@@ -8,12 +8,39 @@
 </head>
 <body>
 
-  <h1>モルディブ謎メイカー</h1>
+  <main id="app">
 
-  <p id="status">JavaScript が動いていません</p>
+    <!-- タイトル画面 -->
+    <section id="screen-title" class="screen">
+      <h1>モルディブ謎メイカー</h1>
+      <p class="message">2枚の写真から10秒の動画を作ります。</p>
+      <button data-goto="screen-upload">はじめる</button>
+    </section>
 
-  <button id="testBtn">クリックしてテスト</button>
-  <p id="result"></p>
+    <!-- アップロード画面 -->
+    <section id="screen-upload" class="screen">
+      <h2>写真を2枚選ぶ</h2>
+      <p class="message">（ここに画像選択UIが入ります）</p>
+      <button data-goto="screen-title">もどる</button>
+      <button data-goto="screen-crop">つぎへ</button>
+    </section>
+
+    <!-- トリミング画面 -->
+    <section id="screen-crop" class="screen">
+      <h2>ズームの始点を決める</h2>
+      <p class="message">（ここにトリミングUIが入ります）</p>
+      <button data-goto="screen-upload">もどる</button>
+      <button data-goto="screen-result">動画を作る</button>
+    </section>
+
+    <!-- 結果画面 -->
+    <section id="screen-result" class="screen">
+      <h2>できあがり</h2>
+      <p class="message">（ここに動画プレビューとダウンロードが入ります）</p>
+      <button data-goto="screen-title">最初から</button>
+    </section>
+
+  </main>
 
   <script type="module" src="js/main.js"></script>
 

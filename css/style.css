@@ -6,11 +6,27 @@ body {
   line-height: 1.7;
 }
 
-#status {
+/* 画面の表示・非表示 */
+.screen {
+  display: none;
+}
+
+.screen.active {
+  display: block;
+}
+
+.message {
   padding: 12px;
   border-radius: 6px;
   background: #eee;
 }
 
-#status.ok { background: #d8f0d8; }
-#status.ng { background: #f5d5d5; }
+.message.ok { background: #d8f0d8; }
+.message.ng { background: #f5d5d5; }
+
+button {
+  font-size: 1rem;
+  padding: 10px 20px;
+  margin-right: 8px;
+  cursor: pointer;
+}
