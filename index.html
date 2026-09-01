@@ -20,9 +20,23 @@
     <!-- アップロード画面 -->
     <section id="screen-upload" class="screen">
       <h2>写真を2枚選ぶ</h2>
-      <p class="message">（ここに画像選択UIが入ります）</p>
+
+      <div class="slot">
+        <label for="riddleInput">謎画像</label>
+        <input type="file" id="riddleInput" accept="image/*">
+        <div class="preview" id="riddlePreview"></div>
+      </div>
+
+      <div class="slot">
+        <label for="answerInput">答え画像</label>
+        <input type="file" id="answerInput" accept="image/*">
+        <div class="preview" id="answerPreview"></div>
+      </div>
+
+      <p class="message" id="uploadStatus">2枚とも選んでください</p>
+
       <button data-goto="screen-title">もどる</button>
-      <button data-goto="screen-crop">つぎへ</button>
+      <button id="toCropBtn" data-goto="screen-crop" disabled>つぎへ</button>
     </section>
 
     <!-- トリミング画面 -->

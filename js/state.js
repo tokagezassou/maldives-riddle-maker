@@ -1,6 +1,6 @@
 export const state = {
-  image1: null,
-  image2: null,
+  riddleImage: null,
+  answerImage: null,
   aspectRatio: null,
   outputSize: null,
   cropRect: null,
