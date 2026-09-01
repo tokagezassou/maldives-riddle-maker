@@ -61,3 +61,41 @@ button:disabled {
   opacity: 0.4;
   cursor: not-allowed;
 }
+
+.hint {
+  font-size: 0.9rem;
+  color: #666;
+}
+
+.crop-area {
+  background: #666;
+  display: inline-block;
+  line-height: 0;
+}
+
+#cropCanvas {
+  touch-action: none;
+  cursor: grab;
+  max-width: 100%;
+}
+
+#cropCanvas.dragging {
+  cursor: grabbing;
+}
+
+.zoom-control {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 16px 0;
+}
+
+.zoom-control input[type="range"] {
+  flex: 1;
+}
+
+#zoomLabel {
+  min-width: 5em;
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}

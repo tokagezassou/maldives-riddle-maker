@@ -1,5 +1,5 @@
 import { state } from './state.js';
-import { loadImage, bitmapToPreviewImage, aspectRatiosMatch } from './image-loader.js';
+import { loadImage, bitmapToPreviewImage, aspectRatiosMatch } from './image_loader.js';
 
 const statusEl = document.getElementById('uploadStatus');
 const nextBtn = document.getElementById('toCropBtn');

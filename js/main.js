@@ -1,5 +1,6 @@
-import { showScreen, setupNavigation } from './screens.js';
+import { showScreen, setupNavigation, registerOnEnter } from './screens.js';
 import { setupUpload } from './upload.js';
+import { initCropper } from './cropper.js';
 
 if (location.protocol === 'file:') {
   document.body.innerHTML =
@@ -7,5 +8,6 @@ if (location.protocol === 'file:') {
 } else {
   setupNavigation();
   setupUpload();
+  registerOnEnter('screen-crop', initCropper);
   showScreen('screen-title');
 }

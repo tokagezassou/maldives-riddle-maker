@@ -1,3 +1,9 @@
+const onEnter = {};
+
+export function registerOnEnter(id, fn) {
+  onEnter[id] = fn;
+}
+
 export function showScreen(id) {
   const target = document.getElementById(id);
 
@@ -11,9 +17,10 @@ export function showScreen(id) {
   });
 
   target.classList.add('active');
-
   window.scrollTo(0, 0);
   console.log(`画面遷移: ${id}`);
+
+  if (onEnter[id]) onEnter[id]();
 }
 
 export function setupNavigation() {
