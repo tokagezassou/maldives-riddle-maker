@@ -1,0 +1,16 @@
+body {
+  font-family: sans-serif;
+  max-width: 640px;
+  margin: 40px auto;
+  padding: 0 16px;
+  line-height: 1.7;
+}
+
+#status {
+  padding: 12px;
+  border-radius: 6px;
+  background: #eee;
+}
+
+#status.ok { background: #d8f0d8; }
+#status.ng { background: #f5d5d5; }
