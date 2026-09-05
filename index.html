@@ -39,7 +39,7 @@
       <button id="toCropBtn" data-goto="screen-crop" disabled>つぎへ</button>
     </section>
 
-    <!-- トリミング画面 -->
+        <!-- トリミング画面 -->
     <section id="screen-crop" class="screen">
       <h2>ズームの始点を決める</h2>
       <p class="hint">ドラッグで位置、スライダーかホイールで大きさを調整します。</p>
@@ -48,21 +48,50 @@
         <canvas id="cropCanvas"></canvas>
       </div>
 
-        <div class="zoom-control">
-          <span class="zoom-end">縮小</span>
-          <input type="range" id="zoomSlider" min="0" max="1" step="0.001" value="0">
-          <span class="zoom-end">拡大</span>
-          <span id="zoomLabel"></span>
-        </div>
+      <div class="zoom-control">
+        <span class="zoom-end">縮小</span>
+        <input type="range" id="zoomSlider" min="0" max="1" step="0.001" value="0">
+        <span class="zoom-end">拡大</span>
+        <span id="zoomLabel"></span>
+      </div>
 
       <button data-goto="screen-upload">もどる</button>
+      <button data-goto="screen-result">動画を作る</button>
+    </section>
+
+    <!-- プレビュー画面（開発用・通常は通らない） -->
+    <section id="screen-preview" class="screen">
+      <h2>プレビュー</h2>
+
+      <div class="preview-area">
+        <canvas id="previewCanvas"></canvas>
+      </div>
+
+      <div class="playback">
+        <button id="playBtn">再生</button>
+        <input type="range" id="seekBar" min="0" max="1" step="0.001" value="0">
+        <span id="timeLabel">0.0 / 19.0</span>
+      </div>
+
+      <button data-goto="screen-crop">もどる</button>
       <button data-goto="screen-result">動画を作る</button>
     </section>
 
     <!-- 結果画面 -->
     <section id="screen-result" class="screen">
       <h2>できあがり</h2>
-      <p class="message">（ここに動画プレビューとダウンロードが入ります）</p>
+
+      <p class="message" id="encodeStatus">準備中…</p>
+
+      <div class="progress-wrap">
+        <div class="progress-bar" id="progressBar"></div>
+      </div>
+
+      <p class="hint" id="encodeLog"></p>
+
+      <div id="resultArea"></div>
+
+      <button data-goto="screen-crop">もどる</button>
       <button data-goto="screen-title">最初から</button>
     </section>
 
