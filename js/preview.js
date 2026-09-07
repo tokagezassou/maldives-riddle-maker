@@ -19,6 +19,7 @@ function opts() {
     riddleImage: state.riddleImage,
     answerImage: state.answerImage,
     cropRect: state.cropRect,
+    midRect: state.midRect,
     aspectRatio: state.aspectRatio,
   };
 }

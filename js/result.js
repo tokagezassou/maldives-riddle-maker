@@ -53,6 +53,7 @@ export async function initResult() {
         riddleImage: state.riddleImage,
         answerImage: state.answerImage,
         cropRect: state.cropRect,
+        midProgress: state.midProgress,
         aspectRatio: state.aspectRatio,
       },
       state.outputSize,

@@ -1,7 +1,7 @@
 import { showScreen, setupNavigation, registerOnEnter } from './screens.js';
 import { setupUpload } from './upload.js';
-import { initCropper } from './cropper.js';
-import { initPreview } from './preview.js';
+import { initCropper } from './zoom_out_cropper.js';
+import { initMidpoint } from './zoom_out_midpoint.js';
 import { initResult } from './result.js';
 
 if (location.protocol === 'file:') {
@@ -11,7 +11,7 @@ if (location.protocol === 'file:') {
   setupNavigation();
   setupUpload();
   registerOnEnter('screen-crop', initCropper);
-  registerOnEnter('screen-preview', initPreview);
+  registerOnEnter('screen-midpoint', initMidpoint);
   registerOnEnter('screen-result', initResult);
   showScreen('screen-title');
 }

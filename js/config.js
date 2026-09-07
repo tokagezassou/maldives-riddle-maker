@@ -6,7 +6,6 @@ export const CONFIG = {
 
   // --- 謎画像のズームアウト ---
   slowZoomDuration: 9.8,    // 前半、ゆっくり引く時間（秒）
-  slowZoomProgress: 70,     // 前半で進む割合（%）
   fastZoomDuration: 0.2,    // 後半、残りを引ききる時間（秒）
 
   // --- 答え画像 ---

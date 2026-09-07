@@ -56,21 +56,23 @@
       </div>
 
       <button data-goto="screen-upload">もどる</button>
-      <button data-goto="screen-result">動画を作る</button>
+      <button data-goto="screen-midpoint">つぎへ</button>
     </section>
 
-    <!-- プレビュー画面（開発用・通常は通らない） -->
-    <section id="screen-preview" class="screen">
-      <h2>プレビュー</h2>
+    <!-- 中間地点の指定 -->
+    <section id="screen-midpoint" class="screen">
+      <h2>ズームの中間地点を決める</h2>
+      <p class="hint">前半でここまで引きます。スライダーかホイールで調整します。</p>
 
-      <div class="preview-area">
-        <canvas id="previewCanvas"></canvas>
+      <div class="crop-area">
+        <canvas id="midCanvas"></canvas>
       </div>
 
-      <div class="playback">
-        <button id="playBtn">再生</button>
-        <input type="range" id="seekBar" min="0" max="1" step="0.001" value="0">
-        <span id="timeLabel">0.0 / 19.0</span>
+      <div class="zoom-control">
+        <span class="zoom-end">始点</span>
+        <input type="range" id="midSlider" min="0" max="1" step="0.001" value="0.5">
+        <span class="zoom-end">全体</span>
+        <span id="midLabel"></span>
       </div>
 
       <button data-goto="screen-crop">もどる</button>

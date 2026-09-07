@@ -4,5 +4,6 @@ export const state = {
   aspectRatio: null,
   outputSize: null,
   cropRect: null,
+  midProgress: 0.5,
   videoBlob: null,
 };

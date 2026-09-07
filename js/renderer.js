@@ -1,23 +1,22 @@
 import { CONFIG } from './config.js';
 import { containFit } from './geometry.js';
-import { zoomProgress, answerOpacity, riddleRect } from './timeline.js';
+import { riddleRectAt, answerOpacity } from './zoom_out_timeline.js';
 
 export function fullRectOf(img, aspectRatio) {
   return containFit(aspectRatio, 1, img.width, img.height);
 }
 
 export function drawFrame(ctx, t, opts) {
-  const { riddleImage, answerImage, cropRect, aspectRatio } = opts;
+  const { riddleImage, answerImage, cropRect, midProgress, aspectRatio } = opts;
   const cw = ctx.canvas.width;
   const ch = ctx.canvas.height;
 
-    ctx.globalAlpha = 1;
+  ctx.globalAlpha = 1;
   ctx.fillStyle = CONFIG.backgroundColor;
   ctx.fillRect(0, 0, cw, ch);
 
-  // --- 謎画像（ズームアウト） ---
   const full = fullRectOf(riddleImage, aspectRatio);
-  const src = riddleRect(cropRect, full, zoomProgress(t));
+  const src = riddleRectAt(t, cropRect, full, midProgress);
   const dst = containFit(src.width, src.height, cw, ch);
 
   ctx.drawImage(
@@ -26,7 +25,6 @@ export function drawFrame(ctx, t, opts) {
     dst.x, dst.y, dst.width, dst.height
   );
 
-  // --- 答え画像（フェードインのみ） ---
   const alpha = answerOpacity(t);
   if (alpha > 0) {
     const aSrc = fullRectOf(answerImage, aspectRatio);
