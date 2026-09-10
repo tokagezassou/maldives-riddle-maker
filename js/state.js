@@ -6,4 +6,5 @@ export const state = {
   cropRect: null,
   midProgress: 0.5,
   videoBlob: null,
+  videoUrl: null,
 };

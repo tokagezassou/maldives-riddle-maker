@@ -60,3 +60,32 @@ export function setupUpload() {
   setupSlot('riddleInput', 'riddlePreview', 'riddleImage');
   setupSlot('answerInput', 'answerPreview', 'answerImage');
 }
+
+export function initUpload() {
+  const slots = [
+    ['riddleInput', 'riddlePreview', 'riddleImage'],
+    ['answerInput', 'answerPreview', 'answerImage'],
+  ];
+
+  for (const [inputId, previewId, stateKey] of slots) {
+    document.getElementById(inputId).value = '';
+    document.getElementById(previewId).innerHTML = '';
+
+    if (state[stateKey]) state[stateKey].close();
+    state[stateKey] = null;
+  }
+
+  state.cropRect = null;
+  state.midProgress = 0.5;
+  state.aspectRatio = null;
+  state.outputSize = null;
+  state.videoBlob = null;
+
+  if (state.videoUrl) {
+    URL.revokeObjectURL(state.videoUrl);
+    state.videoUrl = null;
+  }
+  state.videoBlob = null;
+
+  updateStatus();
+}

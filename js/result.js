@@ -94,6 +94,7 @@ export async function initResult() {
     console.log(`エンコード所要時間: ${seconds}秒`);
 
     const url = URL.createObjectURL(blob);
+    state.videoUrl = url;
 
     const link = document.createElement('a');
     link.href = url;

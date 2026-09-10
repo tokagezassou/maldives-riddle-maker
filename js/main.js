@@ -1,5 +1,5 @@
 import { showScreen, setupNavigation, registerOnEnter } from './screens.js';
-import { setupUpload } from './upload.js';
+import { setupUpload, initUpload } from './upload.js';
 import { initCropper } from './zoom_out_cropper.js';
 import { initMidpoint } from './zoom_out_midpoint.js';
 import { initResult } from './result.js';
@@ -14,4 +14,5 @@ if (location.protocol === 'file:') {
   registerOnEnter('screen-midpoint', initMidpoint);
   registerOnEnter('screen-result', initResult);
   showScreen('screen-title');
+    registerOnEnter('screen-upload', initUpload);
 }
