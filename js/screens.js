@@ -4,7 +4,28 @@ export function registerOnEnter(id, fn) {
   onEnter[id] = fn;
 }
 
+let locked = false;
+
+export function lockNavigation() {
+  locked = true;
+  document.querySelectorAll('[data-goto]').forEach((btn) => {
+    btn.disabled = true;
+  });
+}
+
+export function unlockNavigation() {
+  locked = false;
+  document.querySelectorAll('[data-goto]').forEach((btn) => {
+    btn.disabled = false;
+  });
+}
+
 export function showScreen(id) {
+  if (locked) {
+    console.warn('処理中のため画面を移動できません');
+    return;
+  }
+
   const target = document.getElementById(id);
 
   if (!target) {
@@ -18,7 +39,6 @@ export function showScreen(id) {
 
   target.classList.add('active');
   window.scrollTo(0, 0);
-  console.log(`画面遷移: ${id}`);
 
   if (onEnter[id]) onEnter[id]();
 }

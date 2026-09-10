@@ -1,20 +1,33 @@
 import { state } from './state.js';
 import { encodeVideo } from './encoder.js';
+import { lockNavigation, unlockNavigation } from './screens.js';
 
 const statusEl = document.getElementById('encodeStatus');
 const barEl = document.getElementById('progressBar');
 const logEl = document.getElementById('encodeLog');
 const areaEl = document.getElementById('resultArea');
 
-const PHASE_LABEL = {
-  load: 'ffmpeg を読み込んでいます',
-  frames: 'フレームを描画しています',
-  audio: 'BGM を読み込んでいます',
-  encode: 'エンコードしています',
-  finish: '仕上げています',
-};
+
+const PHASE_ORDER = ['load', 'frames', 'audio', 'encode', 'finish'];
 
 let running = false;
+
+const PHASE_WEIGHT = {
+  load: 0.05,
+  frames: 0.45,
+  audio: 0.02,
+  encode: 0.45,
+  finish: 0.03,
+};
+
+function phaseOffset(phase) {
+  let sum = 0;
+  for (const p of PHASE_ORDER) {
+    if (p === phase) break;
+    sum += PHASE_WEIGHT[p];
+  }
+  return sum;
+}
 
 function setProgress(phase, ratio, detail) {
   if (phase === 'log') {
@@ -23,31 +36,39 @@ function setProgress(phase, ratio, detail) {
   }
 
   statusEl.classList.remove('ok', 'ng');
-  statusEl.textContent = detail
-    ? `${PHASE_LABEL[phase]}（${detail}）`
-    : PHASE_LABEL[phase];
+  statusEl.textContent = '動画を作っています…（画面を閉じないでください）';
 
-  if (ratio >= 0) {
-    barEl.style.width = `${Math.round(ratio * 100)}%`;
-  }
+  const r = ratio < 0 ? 0 : ratio;
+  const overall = phaseOffset(phase) + PHASE_WEIGHT[phase] * r;
+
+  barEl.style.width = `${Math.round(overall * 100)}%`;
 }
 
 export async function initResult() {
+  console.log('[A] initResult 開始', running);
   if (running) return;
+
+  console.log('[B] state', !!state.riddleImage, !!state.answerImage, !!state.cropRect);
   if (!state.riddleImage || !state.answerImage || !state.cropRect) {
     statusEl.textContent = '画像が選ばれていません';
     statusEl.className = 'message ng';
     return;
   }
 
+  console.log('[C] DOM', !!statusEl, !!barEl, !!logEl, !!areaEl);
+
   running = true;
+  lockNavigation();
   areaEl.innerHTML = '';
   barEl.style.width = '0%';
   logEl.textContent = '';
 
+  console.log('[D] 初期化完了');
+
   const started = performance.now();
 
   try {
+    console.log('[E] encodeVideo 呼び出し', state.outputSize);
     const blob = await encodeVideo(
       {
         riddleImage: state.riddleImage,
@@ -92,5 +113,6 @@ export async function initResult() {
     statusEl.className = 'message ng';
   } finally {
     running = false;
+    unlockNavigation();
   }
 }
