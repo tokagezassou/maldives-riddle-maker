@@ -1,11 +1,13 @@
 import { state } from './state.js';
 import { encodeVideo } from './encoder.js';
 import { lockNavigation, unlockNavigation } from './screens.js';
+import { drawFrame } from './renderer.js';
 
 const statusEl = document.getElementById('encodeStatus');
 const barEl = document.getElementById('progressBar');
 const logEl = document.getElementById('encodeLog');
 const areaEl = document.getElementById('resultArea');
+const stillArea = document.getElementById('stillArea');
 
 
 const PHASE_ORDER = ['load', 'frames', 'audio', 'encode', 'finish'];
@@ -42,6 +44,44 @@ function setProgress(phase, ratio, detail) {
   const overall = phaseOffset(phase) + PHASE_WEIGHT[phase] * r;
 
   barEl.style.width = `${Math.round(overall * 100)}%`;
+}
+
+/**
+ * 0秒時点のフレームを画像として出力する
+ */
+async function buildStill() {
+  stillArea.innerHTML = '';
+
+  const canvas = document.createElement('canvas');
+  canvas.width = state.outputSize.width;
+  canvas.height = state.outputSize.height;
+  const ctx = canvas.getContext('2d');
+
+  drawFrame(ctx, 0, {
+    riddleImage: state.riddleImage,
+    answerImage: state.answerImage,
+    cropRect: state.cropRect,
+    midProgress: state.midProgress,
+    aspectRatio: state.aspectRatio,
+  });
+
+  const blob = await new Promise((resolve) => {
+    canvas.toBlob(resolve, 'image/jpeg', 0.92);
+  });
+
+  const url = URL.createObjectURL(blob);
+  state.stillUrl = url;
+
+  const img = document.createElement('img');
+  img.src = url;
+  stillArea.appendChild(img);
+
+  const link = document.createElement('a');
+  link.href = url;
+  link.download = 'riddle.jpg';
+  link.textContent = '画像をダウンロード';
+  link.className = 'download-link';
+  stillArea.appendChild(link);
 }
 
 export async function initResult() {
@@ -108,6 +148,8 @@ export async function initResult() {
     video.controls = true;
     video.playsInline = true;
     areaEl.appendChild(video);
+
+    await buildStill();
   } catch (err) {
     console.error(err);
     statusEl.textContent = `失敗しました: ${err.message}`;

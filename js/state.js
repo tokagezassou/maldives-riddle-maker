@@ -7,4 +7,5 @@ export const state = {
   midProgress: 0.5,
   videoBlob: null,
   videoUrl: null,
+  stillUrl: null,
 };

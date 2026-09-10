@@ -87,5 +87,10 @@ export function initUpload() {
   }
   state.videoBlob = null;
 
+  if (state.stillUrl) {
+    URL.revokeObjectURL(state.stillUrl);
+    state.stillUrl = null;
+  }
+
   updateStatus();
 }
