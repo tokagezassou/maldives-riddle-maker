@@ -4,15 +4,24 @@ function lerp(a, b, t) {
   return a + (b - a) * t;
 }
 
+function warpTime(t, r0, r1) {
+  const w0 = r0.width;
+  const w1 = r1.width;
+  if (w0 >= w1) return t;
+
+  // 指数的に変化する幅を求め、それが線形補間上のどこに当たるか逆算
+  const w = w0 * Math.pow(w1 / w0, t);
+  return (w - w0) / (w1 - w0);
+}
+
 export function interpRect(r0, r1, t) {
-  const k = Math.pow(r1.width / r0.width, t);
-  const w = r0.width * k;
-  const h = r0.height * k;
-
-  const cx = lerp(r0.x + r0.width / 2, r1.x + r1.width / 2, t);
-  const cy = lerp(r0.y + r0.height / 2, r1.y + r1.height / 2, t);
-
-  return { x: cx - w / 2, y: cy - h / 2, width: w, height: h };
+  const u = warpTime(t, r0, r1);
+  return {
+    x: lerp(r0.x, r1.x, u),
+    y: lerp(r0.y, r1.y, u),
+    width: lerp(r0.width, r1.width, u),
+    height: lerp(r0.height, r1.height, u),
+  };
 }
 
 export function riddleRectAt(t, cropRect, fullRect, midProgress) {

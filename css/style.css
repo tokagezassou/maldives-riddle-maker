@@ -189,3 +189,7 @@ button:disabled {
   margin-bottom: 12px;
   border: 1px solid #ccc;
 }
+
+#encodeLog {
+  display: none;
+}
